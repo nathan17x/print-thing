@@ -1,0 +1,82 @@
+// Human-readable text for IPP printer-state-reasons and job-state-reasons (client-safe).
+
+export function describeReason(keyword: string) {
+  const sev: "error" | "warning" | "report" | "info" =
+    keyword.endsWith("-error") ? "error" : keyword.endsWith("-warning") ? "warning" : keyword.endsWith("-report") ? "report" : "info";
+  const base = keyword.replace(/-(error|warning|report)$/, "");
+  return { keyword, severity: sev, text: REASON_TEXT[base] ?? humanize(base) };
+}
+
+const humanize = (k: string) => k.replace(/^(com|hp)\.[^-]*-?/, "").replace(/-/g, " ").replace(/^\w/, (c) => c.toUpperCase());
+
+export const REASON_TEXT: Record<string, string> = {
+  // printer-state-reasons
+  "media-empty": "Paper tray is empty",
+  "media-needed": "Paper needs to be loaded",
+  "media-jam": "Paper jam",
+  "media-low": "Paper is running low",
+  "toner-low": "Toner is low",
+  "toner-empty": "Toner is empty",
+  "marker-supply-low": "Ink / toner is low",
+  "marker-supply-empty": "Ink / toner is empty",
+  "marker-waste-almost-full": "Waste container almost full",
+  "marker-waste-full": "Waste container full",
+  "door-open": "A door or cover is open",
+  "cover-open": "Cover is open",
+  "input-tray-missing": "An input tray is missing",
+  "output-tray-missing": "Output tray is missing",
+  "output-area-almost-full": "Output bin almost full",
+  "output-area-full": "Output bin is full",
+  "offline": "Printer is offline",
+  "paused": "Printer is paused",
+  "shutdown": "Printer is shutting down",
+  "connecting-to-device": "Connecting to the printer",
+  "timed-out": "Printer stopped responding",
+  "stopping": "Printer is stopping",
+  "stopped-partly": "Printer partly stopped",
+  "spool-area-full": "Printer storage is full",
+  "cups-missing-filter": "CUPS is missing a filter for this file type",
+  "cups-insecure-filter": "CUPS filter permissions issue",
+  "cups-waiting-for-job-completed": "Waiting for the printer to report the job as finished",
+  "moving-to-paused": "Printer is pausing",
+  "developer-low": "Developer is low",
+  "opc-near-eol": "Imaging drum is near end of life",
+  "fuser-over-temp": "Fuser over temperature",
+  "fuser-under-temp": "Fuser warming up",
+  "interpreter-resource-unavailable": "Printer ran out of resources while processing",
+  "other": "Printer reported an unspecified condition",
+  "identify-printer-requested": "Identify requested",
+  "sleep": "Printer is asleep",
+  "warming-up": "Printer is warming up",
+  "deactivated": "Printer is deactivated",
+  // job-state-reasons
+  "job-incoming": "Receiving the job",
+  "job-data-insufficient": "Waiting for more job data",
+  "job-queued": "Waiting in the print queue",
+  "job-queued-for-marker": "Queued at the printer, waiting to print",
+  "job-transforming": "Converting the document for the printer",
+  "job-printing": "Printing",
+  "job-interpreting": "Printer is processing the document",
+  "job-outgoing": "Sending the job to the printer",
+  "job-completed-successfully": "Completed successfully",
+  "job-completed-with-warnings": "Completed with warnings",
+  "job-completed-with-errors": "Completed with errors",
+  "job-canceled-by-user": "Canceled by a user",
+  "job-canceled-by-operator": "Canceled at the printer",
+  "job-canceled-at-device": "Canceled at the printer",
+  "job-hold-until-specified": "Held until a specified time",
+  "job-stopped": "Job stopped",
+  "aborted-by-system": "Aborted by the print system",
+  "document-format-error": "The printer could not read this document",
+  "document-unprintable-error": "The document cannot be printed",
+  "unsupported-document-format": "The printer does not support this file format",
+  "unsupported-compression": "Unsupported compression",
+  "printer-stopped": "The printer is stopped",
+  "printer-stopped-partly": "The printer is partly stopped",
+  "processing-to-stop-point": "Stopping",
+  "service-off-line": "Printer is offline",
+  "queued-in-device": "Queued inside the printer",
+  "resources-are-not-ready": "Printer resources are not ready (e.g. paper)",
+  "job-fetchable": "Waiting to be fetched",
+  "none": "No issues",
+};

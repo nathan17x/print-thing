@@ -1,0 +1,19 @@
+services:
+  print:
+    build: .
+    image: print-thing
+    container_name: print-thing
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      ADMIN_PASSWORD: admin
+      # Optional: separate signing key for admin sessions (defaults to one derived from ADMIN_PASSWORD)
+      # SESSION_SECRET: some-long-random-string
+      # RETENTION_HOURS: 72      # how long uploaded files and job history are kept
+      # MAX_UPLOAD_MB: 200
+    volumes:
+      - print-data:/data
+
+volumes:
+  print-data:
