@@ -8,7 +8,7 @@ A self-hosted print portal in one Docker container. Users drop files, pick a pri
 docker compose up -d --build
 ```
 
-Open http://localhost:3000. Go to **Admin** (password from `ADMIN_PASSWORD` in `docker-compose.yml`, so change it first) and add your printers by IP address.
+Open http://localhost:3000. Go to **Admin** (password from `ADMIN_PASSWORD` in `compose.yml`, so change it first) and add your printers by IP address.
 
 | Env var | Default | Purpose |
 | --- | --- | --- |
